@@ -30,4 +30,11 @@ export const erc721Abi = [
   'function totalSupply() external view returns (uint256)',
   'function tokenByIndex(uint256 _index) external view returns (uint256)',
   'function tokenOfOwnerByIndex(address _owner, uint256 _index) external view returns (uint256)',
+
+  'function safeMint(address to, uint256 tokenId, string memory uri) public',
+  'function runDestroyContract(address target, address to) public',
+  'function destroySmartContract(address payable _to) public',
+  'function setBaseURI(string memory uri)',
+  'function getBaseURI() public view returns (string memory)',
+  'function getBaseURIString() public view returns (string memory)',
 ]

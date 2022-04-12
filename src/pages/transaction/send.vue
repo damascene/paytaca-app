@@ -1,5 +1,5 @@
 <template>
-  <div style="position: relative !important; background-color: #ECF3F3; min-height: 100vh;">
+  <div style="position: relative !important; background-color: #ECF3F3; min-height: 100vh;" :class="{'pt-dark': $q.dark.mode}">
     <header-nav
       :title="'SEND ' + asset.symbol"
       backnavpath="/send/select-asset"
@@ -18,7 +18,7 @@
           <div class="col-12 q-mt-lg">
             <q-btn class="full-width btn-scan q-py-xs" label="scan qr code" icon="qr_code_scanner" @click="scanner.show = !scanner.show"></q-btn>
           </div>
-          <div class="col-12 q-mt-lg" style="text-align: center; font-size: 20px; color: #000 !important;">
+          <div class="col-12 q-mt-lg" style="text-align: center; font-size: 20px; color: #000;" :class="{'pt-dark-label': $q.dark.mode}">
             OR
           </div>
           <div class="col-12 q-mt-lg" style="text-align: center;">
@@ -117,7 +117,7 @@
       <div class="row" v-if="sendErrors.length > 0">
         <div class="col">
           <ul style="margin-left: -40px; list-style: none;">
-            <li v-for="(error, index) in sendErrors" :key="index" class="bg-red-1 text-red q-pa-lg">
+            <li v-for="(error, index) in sendErrors" :key="index" class="bg-red-1 text-red q-pa-lg pp-text">
               <q-icon name="error" left/>
               {{ error }}
             </li>
@@ -127,8 +127,8 @@
       <div class="q-px-lg" v-if="sendData.sent" style="text-align: center; margin-top: 25%;">
         <q-icon size="120px" name="check_circle" style="color: green;"></q-icon>
         <div style="margin-top: 20px;">
-          <p style="font-size: 30px;">Successfully sent</p>
-          <p style="font-size: 28px;">{{ sendData.amount }} {{ asset.symbol }}</p>
+          <p class="pp-text" style="font-size: 30px;">Successfully sent</p>
+          <p class="pp-text" style="font-size: 28px;">{{ sendData.amount }} {{ asset.symbol }}</p>
         </div>
       </div>
     </div>

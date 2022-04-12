@@ -1,10 +1,10 @@
 <template>
-  <div class="pt-settings">
+  <div class="pt-settings" :class="{'pt-dark': $q.dark.mode}">
       <header-nav title="Settings" backnavpath="/apps" />
       <div class="row" style="padding-top: 60px;">
           <div class="col-12 q-px-lg q-mt-md">
-              <p class="q-px-sm q-my-sm dim-text text-h6">SECURITY</p>
-              <q-list bordered separator padding style="border-radius: 14px; background: #fff">
+              <p class="q-px-sm q-my-sm dim-text text-h6" :class="{'pt-dark-label': $q.dark.mode}">SECURITY</p>
+              <q-list bordered separator padding style="border-radius: 14px; background: #fff" :class="{'pt-dark-card': $q.dark.mode}">
                 <q-item clickable v-ripple v-if="securityAuth" @click="securityOptionDialogStatus = 'show in settings'">
                     <q-item-section>
                         <q-item-label class="pt-setting-menu">Security Authentication Setup</q-item-label>
@@ -15,21 +15,31 @@
                 </q-item>
                 <q-item :disable="!pinStatus" clickable v-ripple @click="popUpPinDialog">
                     <q-item-section>
-                        <q-item-label class="pt-setting-menu">PIN {{ !pinStatus ? '(disabled)' : '' }}</q-item-label>
+                        <q-item-label class="pt-setting-menu" :class="{'pt-dark-label': $q.dark.mode}">PIN {{ !pinStatus ? '(disabled)' : '' }}</q-item-label>
                     </q-item-section>
                     <q-item-section avatar>
                         <q-icon name="pin" class="pt-setting-avatar"></q-icon>
+                    </q-item-section>
+                </q-item>
+                <q-item :disable="!pinStatus" clickable v-ripple @click="popUpPinDialog">
+                    <q-item-section>
+                        <q-item-label class="pt-setting-menu" :class="{'pt-dark-label': $q.dark.mode}">Darkmode</q-item-label>
+                    </q-item-section>
+                    <q-item-section avatar>
+                      <q-toggle
+                        v-model="darkMode"
+                      />
                     </q-item-section>
                 </q-item>
               </q-list>
           </div>
 
           <div class="col-12 q-px-lg q-mt-md">
-              <p class="q-px-sm q-my-sm dim-text text-h6">NETWORK</p>
-              <q-list bordered separator padding style="border-radius: 14px; background: #fff">
+              <p class="q-px-sm q-my-sm dim-text text-h6" :class="{'pt-dark-label': $q.dark.mode}">NETWORK</p>
+              <q-list bordered separator padding style="border-radius: 14px; background: #fff" :class="{'pt-dark-card': $q.dark.mode}">
                 <q-item clickable @click="isTestnet = !isTestnet" v-ripple>
                   <q-item-section>
-                    <q-item-label class="pt-setting-menu">Testnet</q-item-label>
+                    <q-item-label class="pt-setting-menu" :class="{'pt-dark-label': $q.dark.mode}">Testnet</q-item-label>
                   </q-item-section>
                   <q-item-section side>
                     <q-toggle :value="isTestnet" />
@@ -39,10 +49,10 @@
                   <q-item-section side>
                   </q-item-section>
                   <q-item-section>
-                    <q-item-label class="pt-setting-menu">Show Indicator</q-item-label>
+                    <q-item-label class="pt-setting-menu" :class="{'pt-dark-label': $q.dark.mode}">Show Indicator</q-item-label>
                   </q-item-section>
                   <q-item-section side>
-                    <q-toggle :value="showTestnetIndicator"/>
+                    <q-toggle color="teal" :value="showTestnetIndicator"/>
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -70,7 +80,8 @@ export default {
       pinDialogAction: '',
       securityOptionDialogStatus: 'dismiss',
       securityAuth: false,
-      pinStatus: true
+      pinStatus: true,
+      darkMode: this.$q.dark.mode
     }
   },
   components: { HeaderNav, pinDialog, securityOptionDialog },
@@ -91,6 +102,11 @@ export default {
       set(value) {
         this.$store.commit('global/setShowTestnetIndicator', value)
       }
+    }
+  },
+  watch: {
+    darkMode (newVal, oldVal) {
+      this.$q.dark.set(newVal)
     }
   },
   methods: {
